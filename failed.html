@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pembayaran Gagal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:#000;
+color:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+}
+
+.container{
+max-width:500px;
+width:100%;
+text-align:center;
+padding:40px 30px;
+border:1px solid rgba(255,255,255,.1);
+border-radius:20px;
+background:rgba(255,255,255,.03);
+backdrop-filter:blur(10px);
+}
+
+.icon{
+font-size:80px;
+margin-bottom:20px;
+}
+
+h1{
+font-size:32px;
+margin-bottom:15px;
+}
+
+p{
+color:#aaa;
+line-height:1.8;
+margin-bottom:30px;
+}
+
+.btn{
+display:inline-block;
+padding:14px 28px;
+background:#fff;
+color:#000;
+text-decoration:none;
+border-radius:12px;
+font-weight:700;
+transition:.3s;
+}
+
+.btn:hover{
+transform:translateY(-2px);
+}
+
+.info{
+margin-top:20px;
+font-size:13px;
+color:#666;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="icon">⏳</div>
+
+<h1>Pembayaran Kadaluarsa</h1>
+
+<p>
+Waktu pembayaran telah habis atau transaksi tidak berhasil diselesaikan.
+Silakan buat pesanan baru dan lakukan pembayaran kembali.
+</p>
+
+<a href="index.html" class="btn">
+Coba Lagi
+</a>
+
+<div class="info">
+Kode Status: PAYMENT_EXPIRED
+</div>
+
+</div>
+
+</body>
+</html>
