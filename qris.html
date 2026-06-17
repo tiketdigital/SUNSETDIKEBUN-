@@ -3,46 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pembayaran QRIS</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<title>QRID Premium</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
-body{background:#000;color:#fff;padding:20px}
+body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif;padding:20px}
 .container{max-width:700px;margin:auto;text-align:center}
-#timer{font-size:70px;font-weight:800;margin:15px 0}
-.qr-box{background:#fff;padding:15px;border-radius:20px;display:inline-block}
-.qr-box img{width:300px;max-width:100%}
-.total-box,.upload-box,.guide{background:#111;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;margin-top:20px}
-.total-price{font-size:34px;font-weight:800;color:#22c55e}
-.warning{display:none;margin-top:15px;padding:15px;border-radius:12px;background:#330000;color:#ff6666;animation:blink .8s infinite}
+#timer{font-size:72px;font-weight:bold;margin:15px 0}
+.qr{background:#fff;padding:15px;border-radius:20px;display:inline-block}
+.qr img{width:300px;max-width:100%}
+.box{background:#111;border:1px solid #333;border-radius:16px;padding:20px;margin-top:20px}
+.price{font-size:34px;font-weight:bold;color:#22c55e}
+.warning{display:none;background:#3a0000;color:#ff7777;padding:12px;border-radius:12px;margin:15px 0;animation:blink .8s infinite}
 @keyframes blink{50%{opacity:.4}}
-.upload-box input{width:100%;padding:12px;background:#000;color:#fff;border:1px solid #333;border-radius:10px}
+input[type=file]{width:100%;padding:10px;background:#000;color:#fff;border:1px solid #333;border-radius:10px}
 .check{display:flex;gap:10px;text-align:left;margin-top:20px}
-#confirmBtn{width:100%;padding:16px;margin-top:20px;border:none;border-radius:12px;background:#444;color:#999}
-#confirmBtn.active{background:#22c55e;color:#fff;cursor:pointer}
+button{width:100%;padding:16px;border:none;border-radius:12px;background:#444;color:#999;margin-top:20px}
+button.active{background:#22c55e;color:#fff}
 .loading{display:none;position:fixed;inset:0;background:#000;z-index:9999;justify-content:center;align-items:center;flex-direction:column}
 .loader{width:90px;height:90px;border:6px solid #222;border-top:6px solid #22c55e;border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{100%{transform:rotate(360deg)}}
-.progress{width:80%;max-width:500px;height:10px;background:#222;margin-top:20px;border-radius:20px;overflow:hidden}
+.progress{width:80%;max-width:500px;height:10px;background:#222;border-radius:20px;overflow:hidden;margin-top:20px}
 .bar{height:100%;width:0;background:#22c55e}
 </style>
 </head>
 <body>
 <div class="container">
-<div style="letter-spacing:4px;color:#888">BATAS WAKTU PEMBAYARAN</div>
+<div>BATAS WAKTU PEMBAYARAN</div>
 <div id="timer">01:00</div>
 
-<div class="warning" id="warning">⚠️ Segera selesaikan pembayaran sebelum waktu habis.</div>
+<div id="warning" class="warning">⚠️ Segera selesaikan pembayaran sebelum waktu habis.</div>
 
-<div class="qr-box"><img src="qris-pembayaran.png" alt="QRIS"></div>
+<div class="qr"><img src="qris-pembayaran.png" alt="QRIS"></div>
 
-<div class="total-box">
-<div style="color:#999">TOTAL PEMBAYARAN</div>
-<div class="total-price">Rp <span id="totalBayar">0</span></div>
+<div class="box">
+<h3>DETAIL PEMESANAN</h3>
+<p><b>Jenis Tiket:</b> <span id="jenisTiket">-</span></p>
+<p><b>Jumlah Tiket:</b> <span id="jumlahTiket">0</span></p>
+<div class="price">Rp <span id="totalBayar">0</span></div>
 </div>
 
-<div class="upload-box">
-<h3>Upload Bukti Pembayaran</h3><br>
+<div class="box">
+<h3>Upload Bukti Pembayaran</h3>
 <input type="file" id="proofFile" accept="image/*,.pdf">
 </div>
 
@@ -52,83 +52,57 @@ body{background:#000;color:#fff;padding:20px}
 </div>
 
 <button id="confirmBtn" disabled>Konfirmasi Pembayaran</button>
-
-<div class="guide">
-<h3>Petunjuk Pembayaran</h3>
-<ul style="padding-left:20px;line-height:2;text-align:left">
-<li>Scan QRIS.</li>
-<li>Lakukan pembayaran.</li>
-<li>Upload bukti pembayaran.</li>
-<li>Centang pernyataan.</li>
-<li>Klik konfirmasi.</li>
-</ul>
-</div>
 </div>
 
 <div class="loading" id="loading">
 <div class="loader"></div>
-<h2 style="margin-top:20px">Memverifikasi Pembayaran</h2>
-<p style="color:#aaa;text-align:center;margin-top:10px">Mohon tunggu, sistem sedang memvalidasi pembayaran...</p>
+<h2>Memverifikasi Pembayaran</h2>
+<p>Mohon tunggu...</p>
 <div class="progress"><div class="bar" id="bar"></div></div>
 </div>
 
 <script>
-document.getElementById('totalBayar').textContent =
-new Intl.NumberFormat('id-ID').format(localStorage.getItem('total_bayar') || 0);
+document.getElementById("jenisTiket").textContent=localStorage.getItem("jenisTiket")||"-";
+document.getElementById("jumlahTiket").textContent=localStorage.getItem("jumlahTiket")||"0";
+document.getElementById("totalBayar").textContent=new Intl.NumberFormat('id-ID').format(localStorage.getItem("totalPembayaran")||localStorage.getItem("total_bayar")||0);
 
 let totalSeconds=60;
-const timer=document.getElementById('timer');
-
-function render(){
-const m=Math.floor(totalSeconds/60);
-const s=totalSeconds%60;
-timer.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+const timer=document.getElementById("timer");
+function draw(){
+let m=Math.floor(totalSeconds/60),s=totalSeconds%60;
+timer.textContent=String(m).padStart(2,'0')+":"+String(s).padStart(2,'0');
 }
-render();
+draw();
 
 const cd=setInterval(()=>{
 totalSeconds--;
-render();
-
-if(totalSeconds===15){
-document.getElementById('warning').style.display='block';
-}
-if(totalSeconds<=10){
-timer.style.color='#ff4444';
-}
-if(totalSeconds<=0){
-clearInterval(cd);
-location.href='failed.html';
-}
+draw();
+if(totalSeconds===15) document.getElementById("warning").style.display="block";
+if(totalSeconds<=10) timer.style.color="#ff4444";
+if(totalSeconds<=0){clearInterval(cd);location.href="failed.html";}
 },1000);
 
-const agree=document.getElementById('agree');
-const btn=document.getElementById('confirmBtn');
-
+const agree=document.getElementById("agree");
+const btn=document.getElementById("confirmBtn");
 agree.onchange=()=>{
 btn.disabled=!agree.checked;
-btn.classList.toggle('active',agree.checked);
+btn.classList.toggle("active",agree.checked);
 };
 
 btn.onclick=()=>{
-if(document.getElementById('proofFile').files.length===0){
-alert('Silakan upload bukti pembayaran');
+if(document.getElementById("proofFile").files.length===0){
+alert("Upload bukti pembayaran terlebih dahulu.");
 return;
 }
-
 clearInterval(cd);
-document.getElementById('loading').style.display='flex';
-
+document.getElementById("loading").style.display="flex";
 let p=0;
-const bar=document.getElementById('bar');
-
 const iv=setInterval(()=>{
 p++;
-bar.style.width=p+'%';
-
+document.getElementById("bar").style.width=p+"%";
 if(p>=100){
 clearInterval(iv);
-location.href='success.html';
+location.href="success.html";
 }
 },1200);
 };
