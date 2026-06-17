@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pembayaran QRIS - DIGITAL ONLINE</title>
+<title>Pembayaran QRIS</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -12,12 +12,12 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Inter',sans-serif;
 }
 
 body{
 background:#000;
 color:#fff;
+font-family:Inter,sans-serif;
 min-height:100vh;
 display:flex;
 justify-content:center;
@@ -26,21 +26,14 @@ padding:20px;
 }
 
 .container{
-width:100%;
 max-width:700px;
+width:100%;
 text-align:center;
-}
-
-.logo{
-font-size:14px;
-letter-spacing:4px;
-color:#999;
-margin-bottom:20px;
 }
 
 .timer-label{
 font-size:11px;
-letter-spacing:3px;
+letter-spacing:4px;
 color:#888;
 margin-bottom:10px;
 }
@@ -48,124 +41,63 @@ margin-bottom:10px;
 #timer{
 font-size:70px;
 font-weight:800;
-margin-bottom:15px;
-}
-
-.progress{
-width:100%;
-height:6px;
-background:#151515;
-border-radius:20px;
-overflow:hidden;
-margin-bottom:25px;
-}
-
-#progressBar{
-height:100%;
-width:100%;
-background:#fff;
-transition:1s linear;
-}
-
-.card{
-background:#0f0f0f;
-border:1px solid rgba(255,255,255,.08);
-border-radius:22px;
-padding:22px;
-margin-bottom:20px;
-}
-
-.info-row{
-display:flex;
-justify-content:space-between;
-padding:12px 0;
-border-bottom:1px dashed rgba(255,255,255,.08);
-}
-
-.info-row:last-child{
-border-bottom:none;
-}
-
-.amount{
-font-size:38px;
-font-weight:800;
-margin-top:10px;
+margin-bottom:30px;
 }
 
 .qr-box{
-display:inline-block;
 background:#fff;
-padding:18px;
+padding:15px;
 border-radius:20px;
-margin-top:20px;
+display:inline-block;
 }
 
 .qr-box img{
-width:min(320px,80vw);
+width:300px;
+max-width:100%;
 display:block;
-border-radius:12px;
 }
 
-.status{
-margin-top:20px;
-padding:12px;
-border-radius:12px;
-background:#111;
-border:1px solid rgba(255,255,255,.08);
-}
-
-.actions{
-display:flex;
-gap:10px;
-justify-content:center;
-flex-wrap:wrap;
-margin-top:20px;
-}
-
-button{
-padding:14px 22px;
-border:none;
-border-radius:12px;
-cursor:pointer;
+.title{
+margin-top:25px;
+font-size:32px;
 font-weight:700;
 }
 
-.primary{
-background:#fff;
-color:#000;
+.subtitle{
+margin-top:10px;
+color:#999;
+line-height:1.7;
 }
 
-.secondary{
-background:#151515;
-color:#fff;
-border:1px solid rgba(255,255,255,.08);
+#paidBtn{
+display:none;
+margin-top:25px;
+padding:15px 25px;
+border:none;
+border-radius:12px;
+background:#fff;
+color:#000;
+cursor:pointer;
+font-weight:600;
 }
 
 .guide{
-margin-top:25px;
-background:#0f0f0f;
+margin-top:40px;
 padding:20px;
-border-radius:20px;
-border:1px solid rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.1);
+border-radius:15px;
 text-align:left;
 }
 
 .guide ul{
 padding-left:20px;
-line-height:1.9;
-color:#ddd;
+line-height:2;
 }
 
-@media(max-width:600px){
-
-#timer{
-font-size:52px;
-}
-
-.amount{
-font-size:30px;
-}
-
+.status{
+margin-top:15px;
+font-size:14px;
+color:#aaa;
 }
 </style>
 </head>
@@ -173,203 +105,162 @@ font-size:30px;
 
 <div class="container">
 
-<div class="logo">
-DIGITAL ONLINE
-</div>
-
 <div class="timer-label">
 BATAS WAKTU PEMBAYARAN
 </div>
 
-<div id="timer">15:00</div>
-
-<div class="progress">
-<div id="progressBar"></div>
-</div>
-
-<div class="card">
-
-<h3>Detail Pesanan</h3>
-
-<div class="info-row">
-<span>Nama</span>
-<strong id="namaPemesan">-</strong>
-</div>
-
-<div class="info-row">
-<span>Jenis Tiket</span>
-<strong id="jenisTiket">-</strong>
-</div>
-
-<div class="info-row">
-<span>Jumlah Tiket</span>
-<strong id="jumlahTiket">0</strong>
-</div>
-
-<div class="amount" id="totalBayar">
-Rp 0
-</div>
-
-</div>
+<div id="timer">05:00</div>
 
 <div class="qr-box">
-<img id="qrImage" src="qris-pembayaran.png" alt="QRIS DIGITAL ONLINE">
+<img src="qris-pembayaran.png" alt="QRIS">
 </div>
 
-<div class="status" id="statusPembayaran">
-⏳ Menunggu Pembayaran...
+<div class="title">
+PEMBAYARAN QRIS
 </div>
 
-<div class="actions">
+<div class="subtitle">
+Scan QR menggunakan aplikasi Mobile Banking atau E-Wallet yang mendukung QRIS.
+</div>
 
-<button class="secondary" onclick="downloadQR()">
-Download QR
+<button id="paidBtn">
+✓ Saya Telah Melakukan Pembayaran
 </button>
 
-<button class="primary" onclick="konfirmasiBayar()">
-Saya Sudah Bayar
-</button>
-
-</div>
+<div class="status" id="status"></div>
 
 <div class="guide">
-
 <h3>Petunjuk Pembayaran</h3>
-
 <ul>
 <li>Buka aplikasi Mobile Banking atau E-Wallet.</li>
 <li>Pilih menu Scan QRIS.</li>
-<li>Scan kode QR DIGITAL ONLINE.</li>
-<li>Pastikan nominal sesuai.</li>
+<li>Scan QR di atas.</li>
 <li>Selesaikan pembayaran.</li>
-<li>Klik tombol konfirmasi setelah berhasil.</li>
+<li>Klik tombol konfirmasi pembayaran.</li>
 </ul>
-
 </div>
 
 </div>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
 
-/* DATA DARI FROM.HTML */
+/* ===========================
+   KONFIGURASI EMAILJS
+=========================== */
 
-const nama =
-localStorage.getItem('nama') || '-';
+emailjs.init({
+publicKey: "PUBLIC_KEY_ANDA"
+});
 
-const jenis =
-localStorage.getItem('jenisTiket') || '-';
+const SERVICE_ID = "SERVICE_ID_ANDA";
+const TEMPLATE_ID = "TEMPLATE_ID_ANDA";
 
-const jumlah =
-localStorage.getItem('jumlahTiket') || 0;
+/* ===========================
+   TIMER
+=========================== */
 
-const total =
-localStorage.getItem('totalPembayaran') || 0;
+let totalSeconds = 300;
 
-document.getElementById('namaPemesan').innerText =
-nama;
+const timer = document.getElementById("timer");
+const paidBtn = document.getElementById("paidBtn");
+const statusBox = document.getElementById("status");
 
-document.getElementById('jenisTiket').innerText =
-jenis;
+function updateTimer(){
 
-document.getElementById('jumlahTiket').innerText =
-jumlah;
+const minutes = Math.floor(totalSeconds/60);
+const seconds = totalSeconds%60;
 
-document.getElementById('totalBayar').innerText =
-'Rp ' +
-Number(total).toLocaleString('id-ID');
-
-
-/* TIMER */
-
-const initialTime = 900;
-let timeLeft = initialTime;
-
-const timer =
-document.getElementById('timer');
-
-const progress =
-document.getElementById('progressBar');
-
-const countdown =
-setInterval(()=>{
-
-timeLeft--;
-
-let m =
-Math.floor(timeLeft/60);
-
-let s =
-timeLeft%60;
-
-timer.innerHTML =
-String(m).padStart(2,'0')
+timer.textContent =
+String(minutes).padStart(2,'0')
 +
 ':'
 +
-String(s).padStart(2,'0');
+String(seconds).padStart(2,'0');
 
-progress.style.width =
-(timeLeft / initialTime * 100)
-+
-'%';
-
-if(timeLeft <= 60){
-timer.style.color='#ff5757';
 }
 
-if(timeLeft <= 0){
+updateTimer();
+
+const countdown = setInterval(()=>{
+
+totalSeconds--;
+
+updateTimer();
+
+if(totalSeconds <= 240){
+paidBtn.style.display = "inline-block";
+}
+
+if(totalSeconds <= 60){
+timer.style.color = "#ffcc00";
+}
+
+if(totalSeconds <= 20){
+timer.style.color = "#ff5757";
+}
+
+if(totalSeconds <= 0){
 
 clearInterval(countdown);
 
-alert(
-'Waktu pembayaran habis'
-);
-
-window.location.href =
-'failed.html';
+window.location.href = "failed.html";
 
 }
 
 },1000);
 
+/* ===========================
+   KIRIM EMAIL
+=========================== */
 
-/* DOWNLOAD QR */
+paidBtn.addEventListener("click", ()=>{
 
-function downloadQR(){
+paidBtn.disabled = true;
 
-const link =
-document.createElement('a');
+statusBox.innerHTML = "Mengirim konfirmasi pembayaran...";
 
-link.href =
-document.getElementById('qrImage').src;
+const data = {
 
-link.download =
-'QRIS-DIGITAL-ONLINE.png';
+nama: "Customer",
 
-link.click();
+metode: "QRIS",
 
-}
+status: "Pembayaran Dikonfirmasi",
 
+tanggal: new Date().toLocaleString("id-ID"),
 
-/* KONFIRMASI */
+invoice: "INV-" + Date.now()
 
-function konfirmasiBayar(){
+};
 
-clearInterval(countdown);
+emailjs.send(
+SERVICE_ID,
+TEMPLATE_ID,
+data
+)
+.then(()=>{
 
-document.getElementById(
-'statusPembayaran'
-).innerHTML =
-'✅ Pembayaran Berhasil';
+statusBox.innerHTML = "✓ Konfirmasi pembayaran berhasil dikirim.";
 
-setTimeout(()=>{
+alert("Pembayaran berhasil dikonfirmasi.");
 
-window.location.href =
-'success.html';
+window.location.href = "success.html";
 
-},1500);
+})
+.catch((error)=>{
 
-}
+console.error(error);
+
+statusBox.innerHTML = "✗ Gagal mengirim email.";
+
+paidBtn.disabled = false;
+
+});
+
+});
 
 </script>
 
