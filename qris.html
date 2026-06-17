@@ -42,6 +42,7 @@ margin-bottom:10px;
 font-size:70px;
 font-weight:800;
 margin-bottom:30px;
+transition:.3s;
 }
 
 .qr-box{
@@ -70,7 +71,7 @@ line-height:1.7;
 }
 
 #paidBtn{
-display:none;
+display:inline-block;
 margin-top:25px;
 padding:15px 25px;
 border:none;
@@ -79,6 +80,11 @@ background:#fff;
 color:#000;
 cursor:pointer;
 font-weight:600;
+font-size:15px;
+}
+
+#paidBtn:hover{
+opacity:.9;
 }
 
 .guide{
@@ -109,7 +115,7 @@ color:#aaa;
 BATAS WAKTU PEMBAYARAN
 </div>
 
-<div id="timer">05:00</div>
+<div id="timer">00:30</div>
 
 <div class="qr-box">
 <img src="qris-pembayaran.png" alt="QRIS">
@@ -142,38 +148,33 @@ Scan QR menggunakan aplikasi Mobile Banking atau E-Wallet yang mendukung QRIS.
 
 </div>
 
-<!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
 
-/* ===========================
-   KONFIGURASI EMAILJS
-=========================== */
+/* EMAILJS */
 
 emailjs.init({
-publicKey: "A4NzaSDcBFfHlWrfD"
+publicKey:"A4NzaSDcBFfHlWrfD"
 });
 
-const SERVICE_ID = "service_u7tesly";
-const TEMPLATE_ID = "template_cjpgyms";
+const SERVICE_ID="service_u7tesly";
+const TEMPLATE_ID="template_cjpgyms";
 
-/* ===========================
-   TIMER
-=========================== */
+/* TIMER */
 
-let totalSeconds = 300;
+let totalSeconds=30;
 
-const timer = document.getElementById("timer");
-const paidBtn = document.getElementById("paidBtn");
-const statusBox = document.getElementById("status");
+const timer=document.getElementById("timer");
+const paidBtn=document.getElementById("paidBtn");
+const statusBox=document.getElementById("status");
 
 function updateTimer(){
 
-const minutes = Math.floor(totalSeconds/60);
-const seconds = totalSeconds%60;
+const minutes=Math.floor(totalSeconds/60);
+const seconds=totalSeconds%60;
 
-timer.textContent =
+timer.textContent=
 String(minutes).padStart(2,'0')
 +
 ':'
@@ -184,55 +185,69 @@ String(seconds).padStart(2,'0');
 
 updateTimer();
 
-const countdown = setInterval(()=>{
+const countdown=setInterval(()=>{
 
 totalSeconds--;
 
 updateTimer();
 
-if(totalSeconds <= 240){
-paidBtn.style.display = "inline-block";
+if(totalSeconds<=15){
+timer.style.color="#ffcc00";
 }
 
-if(totalSeconds <= 60){
-timer.style.color = "#ffcc00";
+if(totalSeconds<=5){
+timer.style.color="#ff5757";
 }
 
-if(totalSeconds <= 20){
-timer.style.color = "#ff5757";
-}
-
-if(totalSeconds <= 0){
+if(totalSeconds<=0){
 
 clearInterval(countdown);
 
-window.location.href = "failed.html";
+document.body.innerHTML=`
+<div style="
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#000;
+color:#fff;
+font-family:Inter,sans-serif;
+font-size:26px;
+font-weight:700;
+text-align:center;
+padding:20px;
+">
+Waktu Pembayaran Telah Habis
+</div>
+`;
+
+setTimeout(()=>{
+window.location.replace("failed.html");
+},2000);
 
 }
 
 },1000);
 
-/* ===========================
-   KIRIM EMAIL
-=========================== */
+/* KONFIRMASI PEMBAYARAN */
 
-paidBtn.addEventListener("click", ()=>{
+paidBtn.addEventListener("click",()=>{
 
-paidBtn.disabled = true;
+paidBtn.disabled=true;
 
-statusBox.innerHTML = "Mengirim konfirmasi pembayaran...";
+statusBox.innerHTML="Mengirim konfirmasi pembayaran...";
 
-const data = {
+const data={
 
-nama: "Customer",
+nama:"Customer",
 
-metode: "QRIS",
+metode:"QRIS",
 
-status: "Pembayaran Dikonfirmasi",
+status:"Pembayaran Dikonfirmasi",
 
-tanggal: new Date().toLocaleString("id-ID"),
+tanggal:new Date().toLocaleString("id-ID"),
 
-invoice: "INV-" + Date.now()
+invoice:"INV-"+Date.now()
 
 };
 
@@ -241,22 +256,24 @@ SERVICE_ID,
 TEMPLATE_ID,
 data
 )
+
 .then(()=>{
 
-statusBox.innerHTML = "✓ Konfirmasi pembayaran berhasil dikirim.";
+statusBox.innerHTML="✓ Konfirmasi pembayaran berhasil dikirim.";
 
 alert("Pembayaran berhasil dikonfirmasi.");
 
-window.location.href = "success.html";
+window.location.replace("success.html");
 
 })
+
 .catch((error)=>{
 
 console.error(error);
 
-statusBox.innerHTML = "✗ Gagal mengirim email.";
+statusBox.innerHTML="✗ Gagal mengirim email.";
 
-paidBtn.disabled = false;
+paidBtn.disabled=false;
 
 });
 
