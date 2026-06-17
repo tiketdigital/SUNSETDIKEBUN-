@@ -8,130 +8,54 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
-background:#000;
-color:#fff;
-font-family:Inter,sans-serif;
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px;
+background:#000;color:#fff;font-family:Inter,sans-serif;
+min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;
 }
-
-.container{
-max-width:700px;
-width:100%;
-text-align:center;
-}
-
-.timer-label{
-font-size:11px;
-letter-spacing:4px;
-color:#888;
-margin-bottom:10px;
-}
-
-#timer{
-font-size:70px;
-font-weight:800;
-margin-bottom:30px;
-transition:.3s;
-}
-
-.qr-box{
-background:#fff;
-padding:15px;
-border-radius:20px;
-display:inline-block;
-}
-
-.qr-box img{
-width:300px;
-max-width:100%;
-display:block;
-}
-
-.title{
-margin-top:25px;
-font-size:32px;
-font-weight:700;
-}
-
-.subtitle{
-margin-top:10px;
-color:#999;
-line-height:1.7;
-}
-
+.container{max-width:700px;width:100%;text-align:center;}
+.timer-label{font-size:11px;letter-spacing:4px;color:#888;margin-bottom:10px;}
+#timer{font-size:70px;font-weight:800;margin-bottom:30px;transition:.3s;}
+.qr-box{background:#fff;padding:15px;border-radius:20px;display:inline-block;}
+.qr-box img{width:300px;max-width:100%;display:block;}
+.title{margin-top:25px;font-size:32px;font-weight:700;}
+.subtitle{margin-top:10px;color:#999;line-height:1.7;}
 #paidBtn{
-display:inline-block;
-margin-top:25px;
-padding:15px 25px;
-border:none;
-border-radius:12px;
-background:#fff;
-color:#000;
-cursor:pointer;
-font-weight:600;
-font-size:15px;
+display:none;
+margin-top:25px;padding:15px 25px;border:none;border-radius:12px;
+background:#fff;color:#000;cursor:pointer;font-weight:600;font-size:15px;
 }
-
-#paidBtn:hover{
-opacity:.9;
-}
-
-.guide{
-margin-top:40px;
-padding:20px;
-border:1px solid rgba(255,255,255,.1);
-border-radius:15px;
-text-align:left;
-}
-
-.guide ul{
-padding-left:20px;
-line-height:2;
-}
-
-.status{
-margin-top:15px;
-font-size:14px;
-color:#aaa;
-}
+.guide{margin-top:40px;padding:20px;border:1px solid rgba(255,255,255,.1);border-radius:15px;text-align:left;}
+.guide ul{padding-left:20px;line-height:2;}
+.status{margin-top:15px;font-size:14px;color:#aaa;}
+#uploadSection{display:none;margin-top:20px;}
+#proofFile{margin-top:10px;}
 </style>
 </head>
 <body>
 
 <div class="container">
-
-<div class="timer-label">
-BATAS WAKTU PEMBAYARAN
-</div>
-
-<div id="timer">00:30</div>
+<div class="timer-label">BATAS WAKTU PEMBAYARAN</div>
+<div id="timer">01:00</div>
 
 <div class="qr-box">
 <img src="qris-pembayaran.png" alt="QRIS">
 </div>
 
-<div class="title">
-PEMBAYARAN QRIS
-</div>
+<div class="title">PEMBAYARAN QRIS</div>
 
 <div class="subtitle">
 Scan QR menggunakan aplikasi Mobile Banking atau E-Wallet yang mendukung QRIS.
 </div>
 
-<button id="paidBtn">
-✓ Saya Telah Melakukan Pembayaran
-</button>
+<button id="paidBtn">✓ Saya Telah Melakukan Pembayaran</button>
+
+<div id="uploadSection">
+<h3>Upload Bukti Pembayaran</h3>
+<input type="file" id="proofFile" accept="image/*,.pdf">
+<br><br>
+<button id="uploadBtn">Upload Bukti</button>
+</div>
 
 <div class="status" id="status"></div>
 
@@ -142,143 +66,69 @@ Scan QR menggunakan aplikasi Mobile Banking atau E-Wallet yang mendukung QRIS.
 <li>Pilih menu Scan QRIS.</li>
 <li>Scan QR di atas.</li>
 <li>Selesaikan pembayaran.</li>
-<li>Klik tombol konfirmasi pembayaran.</li>
+<li>Klik tombol konfirmasi pembayaran saat muncul.</li>
 </ul>
 </div>
-
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
 <script>
-
-/* EMAILJS */
-
-emailjs.init({
-publicKey:"xxxxxxxx"
-});
-
-const SERVICE_ID="service_u7tesly";
-const TEMPLATE_ID="template_cjpgyms";
-
-/* TIMER */
-
-let totalSeconds=30;
+let totalSeconds = 60;
 
 const timer=document.getElementById("timer");
 const paidBtn=document.getElementById("paidBtn");
+const uploadSection=document.getElementById("uploadSection");
+const uploadBtn=document.getElementById("uploadBtn");
+const proofFile=document.getElementById("proofFile");
 const statusBox=document.getElementById("status");
 
 function updateTimer(){
-
 const minutes=Math.floor(totalSeconds/60);
 const seconds=totalSeconds%60;
-
-timer.textContent=
-String(minutes).padStart(2,'0')
-+
-':'
-+
-String(seconds).padStart(2,'0');
-
+timer.textContent=String(minutes).padStart(2,'0')+':'+String(seconds).padStart(2,'0');
 }
 
 updateTimer();
 
 const countdown=setInterval(()=>{
-
 totalSeconds--;
-
 updateTimer();
 
-if(totalSeconds<=15){
-timer.style.color="#ffcc00";
-}
-
-if(totalSeconds<=5){
-timer.style.color="#ff5757";
-}
+if(totalSeconds<=15){ timer.style.color="#ffcc00"; }
+if(totalSeconds<=10){ paidBtn.style.display="inline-block"; }
+if(totalSeconds<=5){ timer.style.color="#ff5757"; }
 
 if(totalSeconds<=0){
-
 clearInterval(countdown);
-
-document.body.innerHTML=`
-<div style="
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#000;
-color:#fff;
-font-family:Inter,sans-serif;
-font-size:26px;
-font-weight:700;
-text-align:center;
-padding:20px;
-">
-Waktu Pembayaran Telah Habis
-</div>
-`;
-
-setTimeout(()=>{
 window.location.replace("failed.html");
-},2000);
-
 }
-
 },1000);
 
-/* KONFIRMASI PEMBAYARAN */
-
 paidBtn.addEventListener("click",()=>{
+uploadSection.style.display="block";
+paidBtn.style.display="none";
+});
 
-paidBtn.disabled=true;
+uploadBtn.addEventListener("click",()=>{
+if(!proofFile.files.length){
+alert("Silakan pilih file bukti pembayaran.");
+return;
+}
 
-statusBox.innerHTML="Mengirim konfirmasi pembayaran...";
-
-const data={
-
-nama:"Customer",
-
-metode:"QRIS",
-
-status:"Pembayaran Dikonfirmasi",
-
-tanggal:new Date().toLocaleString("id-ID"),
-
-invoice:"INV-"+Date.now()
-
-};
-
-emailjs.send(
-SERVICE_ID,
-TEMPLATE_ID,
-data
-)
-
-.then(()=>{
-
-statusBox.innerHTML="✓ Konfirmasi pembayaran berhasil dikirim.";
-
+statusBox.innerHTML="✓ Bukti pembayaran berhasil diupload.";
 alert("Pembayaran berhasil dikonfirmasi.");
 
-window.location.replace("success.html");
+setTimeout(()=>{
+window.close();
 
-})
-
-.catch((error)=>{
-
-console.error(error);
-
-statusBox.innerHTML="✗ Gagal mengirim email.";
-
-paidBtn.disabled=false;
-
+if(!window.closed){
+document.body.innerHTML=`
+<div style="height:100vh;display:flex;justify-content:center;align-items:center;
+background:#000;color:#fff;font-size:24px;text-align:center;">
+Upload berhasil. Silakan tutup tab ini.
+</div>`;
+}
+},1000);
 });
-
-});
-
 </script>
 
 </body>
