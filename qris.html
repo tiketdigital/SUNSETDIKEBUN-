@@ -1,302 +1,375 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Pembayaran QRIS</title>
+<title>Pembayaran QRIS - DIGITAL ONLINE</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-:root{
-    --bg:#000000;
-    --card:#0d0d0d;
-    --text:#ffffff;
-    --muted:#8a8a8a;
-    --border:rgba(255,255,255,.08);
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
 }
 
 body{
-    font-family:'Inter',sans-serif;
-    background:#000;
-    color:#fff;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
+background:#000;
+color:#fff;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
 }
 
 .container{
-    width:100%;
-    max-width:700px;
-    text-align:center;
+width:100%;
+max-width:700px;
+text-align:center;
 }
 
-/* TIMER */
+.logo{
+font-size:14px;
+letter-spacing:4px;
+color:#999;
+margin-bottom:20px;
+}
 
 .timer-label{
-    color:#7a7a7a;
-    font-size:11px;
-    letter-spacing:4px;
-    text-transform:uppercase;
-    margin-bottom:10px;
+font-size:11px;
+letter-spacing:3px;
+color:#888;
+margin-bottom:10px;
 }
 
 #timer{
-    font-size:clamp(50px,8vw,80px);
-    font-weight:800;
-    letter-spacing:-2px;
-    margin-bottom:45px;
-
-    color:#ffffff;
-
-    text-shadow:
-    0 0 10px rgba(255,255,255,.15);
+font-size:70px;
+font-weight:800;
+margin-bottom:15px;
 }
 
-/* TITLE */
-
-.title{
-    margin-top:30px;
-    font-size:clamp(24px,4vw,34px);
-    font-weight:700;
-    letter-spacing:-1px;
+.progress{
+width:100%;
+height:6px;
+background:#151515;
+border-radius:20px;
+overflow:hidden;
+margin-bottom:25px;
 }
 
-.subtitle{
-    margin-top:10px;
-    color:var(--muted);
-    line-height:1.8;
-    font-size:15px;
+#progressBar{
+height:100%;
+width:100%;
+background:#fff;
+transition:1s linear;
 }
 
-/* QR */
+.card{
+background:#0f0f0f;
+border:1px solid rgba(255,255,255,.08);
+border-radius:22px;
+padding:22px;
+margin-bottom:20px;
+}
 
-.qr-wrapper{
-    display:flex;
-    justify-content:center;
+.info-row{
+display:flex;
+justify-content:space-between;
+padding:12px 0;
+border-bottom:1px dashed rgba(255,255,255,.08);
+}
+
+.info-row:last-child{
+border-bottom:none;
+}
+
+.amount{
+font-size:38px;
+font-weight:800;
+margin-top:10px;
 }
 
 .qr-box{
-    background:#fff;
-    padding:18px;
-    border-radius:22px;
-
-    border:1px solid rgba(255,255,255,.04);
-
-    box-shadow:
-    0 0 0 1px rgba(255,255,255,.04),
-    0 10px 40px rgba(255,255,255,.05);
+display:inline-block;
+background:#fff;
+padding:18px;
+border-radius:20px;
+margin-top:20px;
 }
 
 .qr-box img{
-    display:block;
-    width:min(320px,75vw);
-    height:auto;
-    image-rendering:auto;
-    border-radius:10px;
+width:min(320px,80vw);
+display:block;
+border-radius:12px;
 }
 
-/* BUTTON */
-
-#paidBtn{
-    display:none;
-
-    margin-top:28px;
-
-    border:none;
-    cursor:pointer;
-
-    padding:14px 24px;
-
-    border-radius:12px;
-
-    font-size:14px;
-    font-weight:600;
-
-    background:#ffffff;
-    color:#000;
-
-    transition:.25s ease;
+.status{
+margin-top:20px;
+padding:12px;
+border-radius:12px;
+background:#111;
+border:1px solid rgba(255,255,255,.08);
 }
 
-#paidBtn:hover{
-    transform:translateY(-2px);
+.actions{
+display:flex;
+gap:10px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:20px;
 }
 
-/* GUIDE */
+button{
+padding:14px 22px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:700;
+}
+
+.primary{
+background:#fff;
+color:#000;
+}
+
+.secondary{
+background:#151515;
+color:#fff;
+border:1px solid rgba(255,255,255,.08);
+}
 
 .guide{
-    margin-top:40px;
-
-    background:rgba(255,255,255,.03);
-
-    border:1px solid var(--border);
-
-    border-radius:20px;
-
-    padding:24px;
-
-    text-align:left;
-}
-
-.guide h3{
-    text-align:center;
-    margin-bottom:18px;
-    font-size:16px;
+margin-top:25px;
+background:#0f0f0f;
+padding:20px;
+border-radius:20px;
+border:1px solid rgba(255,255,255,.08);
+text-align:left;
 }
 
 .guide ul{
-    padding-left:20px;
-    color:#d5d5d5;
-    line-height:1.9;
-}
-
-.note{
-    margin-top:18px;
-    text-align:center;
-    color:#7d7d7d;
-    font-size:12px;
+padding-left:20px;
+line-height:1.9;
+color:#ddd;
 }
 
 @media(max-width:600px){
 
-    .guide{
-        padding:18px;
-    }
-
-    .subtitle{
-        font-size:14px;
-    }
-
+#timer{
+font-size:52px;
 }
 
+.amount{
+font-size:30px;
+}
+
+}
 </style>
 </head>
 <body>
 
 <div class="container">
 
-    <div class="timer-label">
-        BATAS WAKTU PEMBAYARAN
-    </div>
+<div class="logo">
+DIGITAL ONLINE
+</div>
 
-    <div id="timer">
-        00:30
-    </div>
+<div class="timer-label">
+BATAS WAKTU PEMBAYARAN
+</div>
 
-    <div class="qr-wrapper">
+<div id="timer">15:00</div>
 
-        <div class="qr-box">
+<div class="progress">
+<div id="progressBar"></div>
+</div>
 
-            <img src="qris-pembayaran.png" alt="QRIS">
+<div class="card">
 
-        </div>
+<h3>Detail Pesanan</h3>
 
-    </div>
+<div class="info-row">
+<span>Nama</span>
+<strong id="namaPemesan">-</strong>
+</div>
 
-    <div class="title">
-        PEMBAYARAN QRIS
-    </div>
+<div class="info-row">
+<span>Jenis Tiket</span>
+<strong id="jenisTiket">-</strong>
+</div>
 
-    <div class="subtitle">
-        Scan kode QR menggunakan aplikasi Mobile Banking atau E-Wallet yang mendukung QRIS.
-    </div>
+<div class="info-row">
+<span>Jumlah Tiket</span>
+<strong id="jumlahTiket">0</strong>
+</div>
 
-    <button id="paidBtn">
-        ✓ Saya Telah Melakukan Pembayaran
-    </button>
+<div class="amount" id="totalBayar">
+Rp 0
+</div>
 
-    <div class="guide">
+</div>
 
-        <h3>Petunjuk Pembayaran</h3>
+<div class="qr-box">
+<img id="qrImage" src="qris-pembayaran.png" alt="QRIS DIGITAL ONLINE">
+</div>
 
-        <ul>
-            <li>Buka aplikasi Mobile Banking atau E-Wallet.</li>
-            <li>Pilih menu Scan QR atau QRIS.</li>
-            <li>Arahkan kamera ke kode QR di atas.</li>
-            <li>Selesaikan transaksi sesuai instruksi aplikasi.</li>
-            <li>Setelah pembayaran berhasil, klik tombol konfirmasi pembayaran.</li>
-        </ul>
+<div class="status" id="statusPembayaran">
+⏳ Menunggu Pembayaran...
+</div>
 
-        <div class="note">
-            Halaman akan ditutup otomatis apabila waktu pembayaran berakhir.
-        </div>
+<div class="actions">
 
-    </div>
+<button class="secondary" onclick="downloadQR()">
+Download QR
+</button>
+
+<button class="primary" onclick="konfirmasiBayar()">
+Saya Sudah Bayar
+</button>
+
+</div>
+
+<div class="guide">
+
+<h3>Petunjuk Pembayaran</h3>
+
+<ul>
+<li>Buka aplikasi Mobile Banking atau E-Wallet.</li>
+<li>Pilih menu Scan QRIS.</li>
+<li>Scan kode QR DIGITAL ONLINE.</li>
+<li>Pastikan nominal sesuai.</li>
+<li>Selesaikan pembayaran.</li>
+<li>Klik tombol konfirmasi setelah berhasil.</li>
+</ul>
+
+</div>
 
 </div>
 
 <script>
 
-let totalSeconds = 30;
+/* DATA DARI FROM.HTML */
 
-const timer = document.getElementById('timer');
-const paidBtn = document.getElementById('paidBtn');
+const nama =
+localStorage.getItem('nama') || '-';
 
-function updateTimer(){
+const jenis =
+localStorage.getItem('jenisTiket') || '-';
 
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
+const jumlah =
+localStorage.getItem('jumlahTiket') || 0;
 
-    timer.textContent =
-        String(minutes).padStart(2,'0')
-        + ':' +
-        String(seconds).padStart(2,'0');
+const total =
+localStorage.getItem('totalPembayaran') || 0;
+
+document.getElementById('namaPemesan').innerText =
+nama;
+
+document.getElementById('jenisTiket').innerText =
+jenis;
+
+document.getElementById('jumlahTiket').innerText =
+jumlah;
+
+document.getElementById('totalBayar').innerText =
+'Rp ' +
+Number(total).toLocaleString('id-ID');
+
+
+/* TIMER */
+
+const initialTime = 900;
+let timeLeft = initialTime;
+
+const timer =
+document.getElementById('timer');
+
+const progress =
+document.getElementById('progressBar');
+
+const countdown =
+setInterval(()=>{
+
+timeLeft--;
+
+let m =
+Math.floor(timeLeft/60);
+
+let s =
+timeLeft%60;
+
+timer.innerHTML =
+String(m).padStart(2,'0')
++
+':'
++
+String(s).padStart(2,'0');
+
+progress.style.width =
+(timeLeft / initialTime * 100)
++
+'%';
+
+if(timeLeft <= 60){
+timer.style.color='#ff5757';
+}
+
+if(timeLeft <= 0){
+
+clearInterval(countdown);
+
+alert(
+'Waktu pembayaran habis'
+);
+
+window.location.href =
+'failed.html';
 
 }
 
-updateTimer();
-
-const countdown = setInterval(() => {
-
-    totalSeconds--;
-
-    updateTimer();
-
-    if(totalSeconds <= 10){
-        paidBtn.style.display = "inline-block";
-    }
-
-    if(totalSeconds <= 10){
-        timer.style.color = "#ffcc00";
-    }
-
-    if(totalSeconds <= 5){
-        timer.style.color = "#ff5757";
-    }
-
-    if(totalSeconds <= 0){
-
-        clearInterval(countdown);
-
-        window.location.href = "failed.html";
-
-    }
-
 },1000);
 
-paidBtn.addEventListener('click', () => {
 
-    alert(
-        "Pembayaran berhasil dikonfirmasi.\n\nSilakan kembali ke halaman pendaftaran sebelumnya."
-    );
+/* DOWNLOAD QR */
 
-    try{
-        window.close();
-    }catch(e){}
+function downloadQR(){
 
-});
+const link =
+document.createElement('a');
+
+link.href =
+document.getElementById('qrImage').src;
+
+link.download =
+'QRIS-DIGITAL-ONLINE.png';
+
+link.click();
+
+}
+
+
+/* KONFIRMASI */
+
+function konfirmasiBayar(){
+
+clearInterval(countdown);
+
+document.getElementById(
+'statusPembayaran'
+).innerHTML =
+'✅ Pembayaran Berhasil';
+
+setTimeout(()=>{
+
+window.location.href =
+'success.html';
+
+},1500);
+
+}
 
 </script>
 
