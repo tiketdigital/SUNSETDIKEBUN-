@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sunset di Kebun</title>
+<title>Sunset di Kebun 2026 | Official Ticket Sales</title>
 
 <style>
+
 *{
 box-sizing:border-box;
 margin:0;
 padding:0;
-font-family:Arial,sans-serif
+font-family:Arial,sans-serif;
 }
 
 body{
@@ -20,13 +21,17 @@ overflow:hidden;
 background:#000;
 }
 
-
-/* BACKGROUND MENGGUNAKAN logo.png */
 .hero{
+
 height:100vh;
+
 background:
-linear-gradient(90deg,rgba(0,0,0,.80),rgba(0,0,0,.35)),
-url("logo.png");
+linear-gradient(
+90deg,
+rgba(0,0,0,.88),
+rgba(0,0,0,.50)
+),
+url("landing-bg.png");
 
 background-size:cover;
 background-position:center;
@@ -34,87 +39,267 @@ background-repeat:no-repeat;
 
 display:flex;
 align-items:center;
-padding:28px;
-color:white;
-}
 
+padding:35px;
+
+color:white;
+
+position:relative;
+
+}
 
 .content{
-max-width:520px;
+
+max-width:650px;
 z-index:2;
+
 }
 
+.logo-wrap{
+
+text-align:center;
+margin-bottom:20px;
+
+}
+
+.logo-wrap img{
+
+width:90px;
+height:auto;
+border-radius:18px;
+
+}
 
 .brand{
-letter-spacing:3px;
-font-size:14px;
-margin-bottom:25px;
-opacity:.8;
+
+font-size:13px;
+letter-spacing:4px;
+font-weight:bold;
+margin-bottom:18px;
+opacity:.85;
+
 }
 
+.status{
+
+display:inline-block;
+
+background:#f5c451;
+color:#111;
+
+padding:10px 18px;
+
+border-radius:999px;
+
+font-size:13px;
+font-weight:800;
+
+margin-bottom:20px;
+
+animation:pulse 1.8s infinite;
+
+}
 
 h1{
-font-size:clamp(48px,12vw,80px);
-line-height:.9;
-margin-bottom:20px;
-}
 
+font-size:clamp(58px,12vw,95px);
+
+line-height:.88;
+
+font-weight:900;
+
+margin-bottom:25px;
+
+}
 
 h1 span{
+
 color:#f5c451;
+
 }
 
+.notice{
 
-p{
-font-size:18px;
-line-height:1.5;
-margin-bottom:25px;
+display:inline-flex;
+align-items:center;
+gap:12px;
+
+background:rgba(0,0,0,.55);
+
+backdrop-filter:blur(12px);
+
+padding:16px 24px;
+
+border-radius:22px;
+
+margin-bottom:28px;
+
+border:1px solid rgba(255,255,255,.15);
+
+font-size:15px;
+font-weight:700;
+
 }
 
+.dot{
 
-.promo{
-display:inline-block;
-background:white;
-color:#111;
-padding:12px 22px;
-border-radius:30px;
-font-weight:800;
-margin-bottom:25px;
+width:12px;
+height:12px;
+
+background:#22c55e;
+
+border-radius:50%;
+
+box-shadow:
+0 0 10px #22c55e,
+0 0 25px #22c55e;
+
+animation:online 1.5s infinite;
+
 }
 
+.desc{
+
+font-size:19px;
+
+line-height:1.7;
+
+margin-bottom:28px;
+
+max-width:600px;
+
+}
 
 .btn{
-display:inline-block;
-background:#fff;
-color:#111;
-text-decoration:none;
-padding:15px 35px;
-border-radius:14px;
-font-weight:800;
-transition:.3s;
-}
 
+display:inline-block;
+
+background:white;
+
+color:#111;
+
+text-decoration:none;
+
+padding:18px 40px;
+
+border-radius:16px;
+
+font-weight:900;
+
+font-size:16px;
+
+transition:.3s;
+
+}
 
 .btn:hover{
-transform:scale(1.05);
+
+transform:translateY(-4px);
+
 }
 
+.footer-note{
 
-@media(max-width:600px){
+margin-top:18px;
+
+font-size:14px;
+
+opacity:.8;
+
+}
+
+.live{
+
+position:absolute;
+
+bottom:25px;
+right:25px;
+
+background:rgba(0,0,0,.55);
+
+backdrop-filter:blur(10px);
+
+padding:15px 20px;
+
+border-radius:18px;
+
+font-size:14px;
+font-weight:bold;
+
+border:1px solid rgba(255,255,255,.15);
+
+}
+
+@keyframes pulse{
+
+50%{
+
+transform:scale(1.05);
+
+}
+
+}
+
+@keyframes online{
+
+50%{
+
+transform:scale(1.3);
+
+opacity:.6;
+
+}
+
+}
+
+@media(max-width:768px){
 
 .hero{
-text-align:center;
+
 justify-content:center;
-padding:20px;
-background-position:center;
+
+text-align:center;
+
+padding:25px;
+
 }
 
 .content{
+
 max-width:100%;
+
+}
+
+.logo-wrap img{
+
+width:80px;
+
 }
 
 h1{
-font-size:55px;
+
+font-size:60px;
+
+}
+
+.desc{
+
+font-size:17px;
+
+}
+
+.live{
+
+left:50%;
+
+right:auto;
+
+transform:translateX(-50%);
+
+width:90%;
+
+text-align:center;
+
 }
 
 }
@@ -123,45 +308,106 @@ font-size:55px;
 
 </head>
 
-
 <body>
-
 
 <section class="hero">
 
 <div class="content">
 
-<div class="brand">
-JAKARTA EVENT × DYANDRA TIKET
+<div class="logo-wrap">
+
+<img src="logo.jpg" alt="Sunset di Kebun">
+
 </div>
 
+<div class="brand">
+
+JAKARTA EVENT PRESENTS
+
+</div>
+
+<div class="status">
+
+🔥 ADDITIONAL TICKET SALES NOW OPEN
+
+</div>
 
 <h1>
+
 Sunset<br>
 <span>di Kebun</span>
+
 </h1>
 
+<div class="notice">
 
-<div class="promo">
-BUY 1 GET 1
+<span class="dot"></span>
+
+🎟️ Limited Ticket Release • Official Ticket Sales
+
 </div>
 
+<p class="desc">
 
-<p>
-Music Show with Green, Conservation and Culture Movement.<br>
-Nikmati pengalaman event bersama orang favoritmu.
+Music, Culture and Conservation in One Extraordinary Experience.
+
+<br><br>
+
+Nikmati penampilan spesial Tulus, Nadin Amizah, Perunggu, Fiersa Besari, Alkateri dan berbagai pengalaman festival yang memadukan musik, alam dan budaya dalam satu perayaan yang tak terlupakan.
+
 </p>
 
+<a href="tiket.html" class="btn">
 
-<a class="btn" href="tiket.html">
-Pesan Tiket
+🎟️ AMANKAN TIKET SEKARANG
+
 </a>
 
+<div class="footer-note">
+
+Additional Ticket Sales Available While Quota Lasts
+
+</div>
+
+</div>
+
+<div id="live" class="live">
+
+🔥 Additional Ticket Sales Now Open
 
 </div>
 
 </section>
 
+<script>
+
+const pesan=[
+
+"🔥 Additional Ticket Sales Now Open",
+
+"🎟️ Kuota tiket tambahan terbatas",
+
+"⚡ VIP Pass hampir habis",
+
+"🎵 Bersiap menikmati Sunset di Kebun",
+
+"🌿 Music • Culture • Conservation",
+
+"🎟️ Official Ticket Sales"
+
+];
+
+let i=0;
+
+setInterval(()=>{
+
+i=(i+1)%pesan.length;
+
+document.getElementById("live").innerHTML=pesan[i];
+
+},4000);
+
+</script>
 
 </body>
 </html>
